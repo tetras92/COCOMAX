@@ -7,7 +7,7 @@ def all_possible_allocations(N):
     retourne l'ensemble exhaustif de tous les bundles de taille N/2
     N etant le nombre total d'objets"""
 
-    L = list(ite.combinations([i for i in range(1, N+1)], N/2))
+    L = list(ite.combinations([i for i in range(1, N+1)], int(N/2)))
     return [set(E) for E in L]
 
 #Alias  Profile : List[int]
