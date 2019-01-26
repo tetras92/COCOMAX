@@ -200,6 +200,6 @@ def TR(N=0, A_pprofile=[], B_pprofile=[]):
     return Alloc
 
 
-TR = TR(4, A_pprofile=[1, 2, 3, 4], B_pprofile=[1, 3, 2, 4])
-
-print(TR)
+# TR = TR(4, A_pprofile=[1, 2, 3, 4], B_pprofile=[1, 3, 2, 4])
+#
+# print(TR)

@@ -143,13 +143,13 @@ def matrix_of_MM_allocations_values(N=0, X=[], L_of_couple_of_pprofiles=(None, N
     return M
 
 
-N = 10
-X = all_possible_allocations(N)
-# print(X)
-# B = matrix_of_borda_scores(X=X, N=N, agent1_pprofile=[1, 2, 3, 4, 5, 6], agent2_pprofile=[6, 5, 4, 3, 2, 1])
-L_C = L_couple_single_peaked_preferences(N)
-# print(L_C)
-M_PO = matrix_of_PO_allocations_values(N=N, X=X, L_of_couple_of_pprofiles=L_C)
+# N = 10
+# X = all_possible_allocations(N)
+# # print(X)
+# # B = matrix_of_borda_scores(X=X, N=N, agent1_pprofile=[1, 2, 3, 4, 5, 6], agent2_pprofile=[6, 5, 4, 3, 2, 1])
+# L_C = L_couple_single_peaked_preferences(N)
+# # print(L_C)
+# M_PO = matrix_of_PO_allocations_values(N=N, X=X, L_of_couple_of_pprofiles=L_C)
 # print(M_PO)
 # M_EF = matrix_of_EF_allocations_values(N=N, X=X, L_of_couple_of_pprofiles=L_C)
 # # print(M_EF)
