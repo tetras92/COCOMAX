@@ -111,7 +111,7 @@ def L_couple_single_peaked_preferences(N):
     L_couple_of_preferences = list()
 
     for i in range(len(L_of_preferences)):
-        for j in range(i, len(L_of_preferences)):
+        for j in range(0, len(L_of_preferences)):
             L_couple_of_preferences.append((L_of_preferences[i], L_of_preferences[j]))
     return L_couple_of_preferences
 

@@ -119,37 +119,44 @@ def RS(Alloc=list(), Z_A=set(), Z_B=set(), U=set(), A_pprofile=[], B_pprofile=[]
 
 def BU(N=0, A_pprofile=[], B_pprofile=[]):
     # at most 2 allocations
-    U = {i for i in range(1, N+1)}
-    Alloc = list()
+
     def Last(agent_pprofile):
         for item in agent_pprofile[::-1]:
             if item in U:
                 return item
 
-    def BU_starting_with(player):
-        Z_A = set()
-        Z_B = set()
-        while len(U) != 0:
-            if player == "A":
-                last_A = Last(A_pprofile)
-                Z_B.add(last_A)
-                U.remove(last_A)
-                player = "B"
-            else:
-                last_B = Last(B_pprofile)
-                Z_A.add(last_B)
-                U.remove(last_B)
-                player = "A"
-        return Z_A
-
-
-    #starting with agent A
-    Alloc.append(BU_starting_with("A"))
     U = {i for i in range(1, N+1)}
-    #starting with agent B
-    A = BU_starting_with("B")
-    if Alloc[0] != A:
-        Alloc.append(A)
+    Alloc = list()
+    Z_A = set()
+    Z_B = set()
+    # Ordre des joueurs A puis B
+    while len(U) != 0:
+        if len(U) % 2 == 0:
+            last_A = Last(A_pprofile)
+            Z_B.add(last_A)
+            U.remove(last_A)
+        else:
+            last_B = Last(B_pprofile)
+            Z_A.add(last_B)
+            U.remove(last_B)
+
+    Alloc.append(Z_A.copy())
+    Z_A.clear()
+    Z_B.clear()
+    U = {i for i in range(1, N+1)}
+    # Ordre des joueurs B puis A
+    while len(U) != 0:
+        if len(U) % 2 != 0:
+            last_A = Last(A_pprofile)
+            Z_B.add(last_A)
+            U.remove(last_A)
+        else:
+            last_B = Last(B_pprofile)
+            Z_A.add(last_B)
+            U.remove(last_B)
+    # print(Z_A)
+    if Z_A != Alloc[0]:
+        Alloc.append(Z_A)
 
     return Alloc
 #
@@ -181,7 +188,7 @@ def TR(N=0, A_pprofile=[], B_pprofile=[]):
                 opponent_id = (pprofile_id + 1)%2
                 opprofile = P_profiles_ordered_List[opponent_id]
 
-                item_to_allocate = Last(opprofile, U)
+                item_to_allocate = Last(opprofile, H_m_l)
                 U.remove(item_to_allocate)
                 L_B[pprofile_id].add(item_to_allocate)
 
@@ -199,7 +206,7 @@ def TR(N=0, A_pprofile=[], B_pprofile=[]):
 
     return Alloc
 
-
-# TR = TR(4, A_pprofile=[1, 2, 3, 4], B_pprofile=[1, 3, 2, 4])
+# [2, 1, 3, 4], [3, 4, 2, 1]
+# TR = TR(4, A_pprofile=[2, 1, 3, 4], B_pprofile=[3, 4, 2, 1])
 #
 # print(TR)

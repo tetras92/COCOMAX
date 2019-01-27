@@ -3,7 +3,7 @@ import time
 import matplotlib.pyplot as plt
 
 Nmin = 4
-Nmax = 8
+Nmax = 10
 Borda_Pareto = list()
 Borda_EF = list()
 Borda_MM = list()
