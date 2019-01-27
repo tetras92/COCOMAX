@@ -1,6 +1,7 @@
 import itertools as ite
 import numpy as np
 from single_peaked import *
+import time
 
 def all_possible_allocations(N):
     """int -> List[Set[int]]
@@ -138,7 +139,7 @@ def matrix_of_MM_allocations_values(N=0, X=[], L_of_couple_of_pprofiles=(None, N
     for i in range(len(L_of_couple_of_pprofiles)):
         agent1_pprofile, agent2_pprofile = L_of_couple_of_pprofiles[i]
         MM_values = MM_allocations_values(N=N, X=X, agent1_pprofile=agent1_pprofile, agent2_pprofile=agent2_pprofile)
-        print(MM_values)
+        # print(MM_values)
         M = np.vstack((M, np.array(MM_values)))
     return M
 
