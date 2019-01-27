@@ -58,7 +58,7 @@ def list_of_all_objects(N):
 
 
 
-#fonction recursive
+#fonction principale de génération des single-peaked
 def single_peak_branch(listobjects, listalloc):
     if(len(listobjects) == 1):
         return listobjects
