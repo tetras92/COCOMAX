@@ -3,15 +3,16 @@ import time
 import matplotlib.pyplot as plt
 
 Nmin = 4
-Nmax = 6
+Nmax = 8
 Borda_Pareto = list()
 Borda_EF = list()
 Borda_MM = list()
-Borda_Pareto_EF_MM = list()
+Borda_S = list()
+Borda_Pareto_EF_MM_S = list()
 
 for N in range(Nmin, Nmax+1, 2):
-    # L_C = L_couple_single_peaked_preferences(N)
-    L_C = L_couple_toutes_preferences(N)
+    L_C = L_couple_single_peaked_preferences(N)
+    # L_C = L_couple_toutes_preferences(N)
     print("Number of problems : {}".format(len(L_C)))
     X = all_possible_allocations(N)
     print("Number of balanced allocations : {}".format(len(X)))
@@ -59,22 +60,37 @@ for N in range(Nmin, Nmax+1, 2):
     Borda_MM.append(round(100.* nb_m/(len(L_C) * len(X)), 2))
 
 
+    t1 = time.time()
+    M_S = matrix_of_BS_allocations_values(N=N, X=X, L_of_couple_of_pprofiles=L_C)
+    print("Borda-Sum", time.time() - t1)
+    print("Matrix generated!")
+
+    nb_s = 0
+    for i in range(len(L_C)):
+        for j in range(len(X)):
+            if M_S[i, j]:
+                nb_s += 1
+
+    Borda_S.append(round(100.* nb_s/(len(L_C) * len(X)), 2))
+
+
     nb_all = 0
     for i in range(len(L_C)):
         for j in range(len(X)):
-            if M_MM[i, j] and M_EF[i, j] and M_PO[i, j]:
+            if M_MM[i, j] and M_EF[i, j] and M_PO[i, j] and M_S[i, j]:
                 nb_all += 1
 
-    Borda_Pareto_EF_MM.append(round(100.* nb_all/(len(L_C) * len(X)), 2))
+    Borda_Pareto_EF_MM_S.append(round(100. * nb_all / (len(L_C) * len(X)), 2))
 
 
 pa, = plt.plot(range(Nmin, Nmax+1, 2), Borda_Pareto, color="blue")
 ef, = plt.plot(range(Nmin, Nmax+1, 2), Borda_EF, color="red")
 mm, = plt.plot(range(Nmin, Nmax+1, 2), Borda_MM, color="yellow")
-al, = plt.plot(range(Nmin, Nmax+1, 2), Borda_Pareto_EF_MM, color="green")
+bs, = plt.plot(range(Nmin, Nmax+1, 2), Borda_S, color="magenta")
+al, = plt.plot(range(Nmin, Nmax+1, 2), Borda_Pareto_EF_MM_S, color="green")
 
-plt.legend([pa, ef, mm, al], ["BP : {}".format(Borda_Pareto), "BE : {}".format(Borda_EF), "BM : {}".format(Borda_MM), "ALL : {}".format(Borda_Pareto_EF_MM)],
-           loc = 'upper right',  markerscale = 100, frameon = False, fontsize = 10)
+plt.legend([pa, ef, mm, bs, al], ["BP : {}".format(Borda_Pareto), "BE : {}".format(Borda_EF), "BM : {}".format(Borda_MM),"BS : {}".format(Borda_S), "ALL : {}".format(Borda_Pareto_EF_MM_S)],
+           loc = 'upper right', markerscale = 100, frameon = False, fontsize = 10)
 plt.title("Fraction of allocations with Borda properties")
 plt.savefig("Fraction_of_allocations_with_Borda_properties[{}].png".format(Nmax))
 plt.close()

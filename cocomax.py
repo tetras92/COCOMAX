@@ -144,6 +144,38 @@ def matrix_of_MM_allocations_values(N=0, X=[], L_of_couple_of_pprofiles=(None, N
     return M
 
 
+def S_allocations_values(N=0, X=[], agent1_pprofile=[], agent2_pprofile=[]):
+    """int * Allocations * Liste[Couple[Profile, Profile]] -> List[bool]
+    retourne une liste de booleens. Elle est telle que la valeur a la position i  est
+    vraie ssi l'allocation a la position i dans X respecte la propriete Borda - Sum"""
+
+    S_list = list()
+    B = matrix_of_borda_scores(N=N, X=X, agent1_pprofile=agent1_pprofile, agent2_pprofile=agent2_pprofile)
+    L_of_sum_B_X_m = [sum(B[j]) for j in range(len(X))]
+    member_droit = max(L_of_sum_B_X_m)
+    for i in range(len(X)):
+        # (6) pg 6 : sum_{m} Bm(Xm)
+        member_gauche = L_of_sum_B_X_m[i]
+        S_list.append(member_gauche == member_droit)
+
+    return S_list
+
+def matrix_of_BS_allocations_values(N=0, X=[], L_of_couple_of_pprofiles=(None, None)):
+    """int * Allocations * Liste[Couple[Profile, Profile]] -> Matrix[len(L_of_couple_of_pprofiles), len(X)]
+    retourne une matrice dont chaque ligne represente un couple de profils de preference des agents 1 et 2
+    et chaque colonne une allocation possible. A l'intersection on a un booleen b indiquant si l'allocation (en colonne)
+    respecte le propriete Borda-Sum etant donne le couple de profils de preference (en ligne)"""
+    M = np.zeros((0, len(X)))
+    for i in range(len(L_of_couple_of_pprofiles)):
+        agent1_pprofile, agent2_pprofile = L_of_couple_of_pprofiles[i]
+        BS_values = S_allocations_values(N=N, X=X, agent1_pprofile=agent1_pprofile, agent2_pprofile=agent2_pprofile)
+        M = np.vstack((M, np.array(BS_values)))
+    return M
+
+
+
+
+
 # N = 4
 # X = all_possible_allocations(N)
 # print(X)
