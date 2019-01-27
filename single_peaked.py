@@ -49,7 +49,7 @@ def overlap_fromright(_list1,_list2,_done,res):
 # all_overlaps(l1,l2,res)
 # print(res)
 
-import itertools
+# import itertools
 
 
 def list_of_all_objects(N):
@@ -114,6 +114,24 @@ def L_couple_single_peaked_preferences(N):
         for j in range(0, len(L_of_preferences)):
             L_couple_of_preferences.append((L_of_preferences[i], L_of_preferences[j]))
     return L_couple_of_preferences
+
+import itertools as ite
+
+def toutes_preferences(N):
+    L = list(ite.permutations([i for i in range(1, N+1)], N))
+    return [list(elem) for elem in L]
+
+def L_couple_toutes_preferences(N):
+    T = toutes_preferences(N)
+    R = list()
+    for i in range(len(T)):
+        for j in range(len(T)):
+            R.append((T[i], T[j]))
+    return R
+
+
+
+# print(len(toutes_preferences(4)))
 
 # listalloc = list()
 # single_peak_branch(listallobjects, listalloc)

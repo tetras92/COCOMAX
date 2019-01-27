@@ -3,15 +3,15 @@ import time
 import matplotlib.pyplot as plt
 
 Nmin = 4
-Nmax = 10
+Nmax = 6
 Borda_Pareto = list()
 Borda_EF = list()
 Borda_MM = list()
-
 Borda_Pareto_EF_MM = list()
 
 for N in range(Nmin, Nmax+1, 2):
-    L_C = L_couple_single_peaked_preferences(N)
+    # L_C = L_couple_single_peaked_preferences(N)
+    L_C = L_couple_toutes_preferences(N)
     print("Number of problems : {}".format(len(L_C)))
     X = all_possible_allocations(N)
     print("Number of balanced allocations : {}".format(len(X)))

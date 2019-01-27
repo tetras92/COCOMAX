@@ -18,7 +18,7 @@ for N in range(Nmin, Nmax+1, 2):
     for i_p in range(len(L_C)):
         profile_A, profile_B = L_C[i_p]
         U = {i for i in range(1, N+1)}
-        Allocations = TR(N=N, A_pprofile=profile_A, B_pprofile=profile_B)
+        Allocations = BU(N=N, A_pprofile=profile_A, B_pprofile=profile_B)
         # Allocations = OS(Alloc=list(), Z_A=set(), Z_B=set(), A_pprofile=profile_A, B_pprofile=profile_B, U=U)
         if len(Allocations) == 0:
             print("no found")
@@ -33,7 +33,7 @@ for N in range(Nmin, Nmax+1, 2):
                     ix += 1
 
             # if M_PO[i_p, ix]  and M_EF[i_p, ix] and M_MM[i_p, ix]:
-            if M_EF[i_p, ix]:
+            if M_MM[i_p, ix]:
                 os_number_of_p_ef_mm_allocations += 1
     print(round(100.*os_number_of_p_ef_mm_allocations/os_number_of_allocations, 2))
 
